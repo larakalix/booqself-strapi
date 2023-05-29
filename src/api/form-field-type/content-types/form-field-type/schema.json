@@ -4,7 +4,8 @@
   "info": {
     "singularName": "form-field-type",
     "pluralName": "form-field-types",
-    "displayName": "Form Field Type"
+    "displayName": "Form Field Type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,12 @@
       "relation": "oneToOne",
       "target": "api::form-field.form-field",
       "mappedBy": "formFieldType"
+    },
+    "options": {
+      "displayName": "options",
+      "type": "component",
+      "repeatable": true,
+      "component": "option.options"
     }
   }
 }
