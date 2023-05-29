@@ -4,7 +4,8 @@
   "info": {
     "singularName": "tenant",
     "pluralName": "tenants",
-    "displayName": "Tenant"
+    "displayName": "Tenant",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -28,6 +29,12 @@
       "relation": "oneToOne",
       "target": "api::form.form",
       "mappedBy": "tenant"
+    },
+    "logo": {
+      "allowedTypes": ["images"],
+      "type": "media",
+      "multiple": false,
+      "required": false
     }
   }
 }
