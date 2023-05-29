@@ -22,6 +22,12 @@
     "tenantId": {
       "type": "uid",
       "targetField": "name"
+    },
+    "form": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form.form",
+      "mappedBy": "tenant"
     }
   }
 }

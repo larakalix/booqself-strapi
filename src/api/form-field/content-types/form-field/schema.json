@@ -29,6 +29,12 @@
       "relation": "oneToOne",
       "target": "api::form-field-type.form-field-type",
       "inversedBy": "formField"
+    },
+    "form": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::form.form",
+      "inversedBy": "form_fields"
     }
   }
 }
