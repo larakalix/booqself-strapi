@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "form_field_types",
+  "info": {
+    "singularName": "form-field-type",
+    "pluralName": "form-field-types",
+    "displayName": "Form Field Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "type": {
+      "type": "string"
+    },
+    "hasOptions": {
+      "type": "boolean",
+      "default": false,
+      "required": false
+    },
+    "description": {
+      "type": "string"
+    },
+    "formField": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field",
+      "mappedBy": "formFieldType"
+    }
+  }
+}
