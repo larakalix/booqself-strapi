@@ -4,7 +4,8 @@
   "info": {
     "singularName": "form",
     "pluralName": "forms",
-    "displayName": "Form"
+    "displayName": "Form",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -20,7 +21,7 @@
       "target": "api::tenant.tenant",
       "inversedBy": "form"
     },
-    "form_fields": {
+    "formFields": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::form-field.form-field",

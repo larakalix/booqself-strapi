@@ -22,18 +22,6 @@
     },
     "description": {
       "type": "string"
-    },
-    "formField": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::form-field.form-field",
-      "mappedBy": "formFieldType"
-    },
-    "options": {
-      "displayName": "options",
-      "type": "component",
-      "repeatable": true,
-      "component": "option.options"
     }
   }
 }

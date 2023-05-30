@@ -1,10 +1,11 @@
 {
-  "kind": "singleType",
+  "kind": "collectionType",
   "collectionName": "tenant_landings",
   "info": {
     "singularName": "tenant-landing",
     "pluralName": "tenant-landings",
-    "displayName": "Tenant Landing"
+    "displayName": "Tenant Landing",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true

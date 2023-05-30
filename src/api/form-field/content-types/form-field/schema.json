@@ -27,14 +27,13 @@
     "formFieldType": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::form-field-type.form-field-type",
-      "inversedBy": "formField"
+      "target": "api::form-field-type.form-field-type"
     },
     "form": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::form.form",
-      "inversedBy": "form_fields"
+      "inversedBy": "formFields"
     }
   }
 }
