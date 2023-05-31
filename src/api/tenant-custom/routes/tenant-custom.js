@@ -18,5 +18,14 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/tenant-custom/boilerplate/:tenantId",
+      handler: "tenant-custom.boilerplate",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };
