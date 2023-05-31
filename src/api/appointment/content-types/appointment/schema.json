@@ -31,6 +31,10 @@
     "appointmentDay": {
       "type": "datetime",
       "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": false
     }
   }
 }
