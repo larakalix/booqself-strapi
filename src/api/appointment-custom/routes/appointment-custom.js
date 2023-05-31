@@ -11,8 +11,8 @@ module.exports = {
     // },
     {
       method: "GET",
-      path: "/client-custom/appointment/:tenantId/:email",
-      handler: "client-custom.appointmentsById",
+      path: "/appointment-custom/:tenantId/:limit/:offset",
+      handler: "appointment-custom.appointmentsByTenantId",
       config: {
         policies: [],
         middlewares: [],
