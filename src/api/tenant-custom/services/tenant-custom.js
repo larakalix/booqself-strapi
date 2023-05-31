@@ -46,8 +46,28 @@ module.exports = () => ({
 
       const tenant = {
         ...response,
-        clients: [...clients],
-        appointments: [...appointments],
+        clients: {
+          data: [...clients],
+          meta: {
+            pagination: {
+              page: 1,
+              pageSize: limit,
+              pageCount: 1,
+              total: clients.length,
+            },
+          },
+        },
+        appointments: {
+          data: [...appointments],
+          meta: {
+            pagination: {
+              page: 1,
+              pageSize: limit,
+              pageCount: 1,
+              total: clients.length,
+            },
+          },
+        },
       };
 
       return tenant;
