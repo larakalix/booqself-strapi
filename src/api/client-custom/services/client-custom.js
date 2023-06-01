@@ -7,7 +7,7 @@
 module.exports = () => ({
   appointmentsById: async ({ tenantId, email, offset, limit }) => {
     try {
-      const result = await trapi.db
+      const result = await strapi.db
         .query("api::appointment.appointment")
         .findMany({
           where: {
