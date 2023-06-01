@@ -16,33 +16,41 @@ module.exports = () => ({
   },
   tenantBoilerplate: async ({ tenantId, offset, limit }) => {
     try {
-      const service = await strapi.db;
-
-      const response = await service.query("api::tenant.tenant").findOne({
+      const response = await strapi.db.query("api::tenant.tenant").findOne({
         where: { tenantId },
       });
 
-      const clients = await service.query("api::client.client").findMany({
-        where: {
-          tenant: {
-            tenantId,
-          },
-        },
-        offset: offset ?? 0,
-        limit: limit ?? 20,
-      });
-
-      const appointments = await service
-        .query("api::appointment.appointment")
-        .findMany({
-          where: {
+      const clients = await strapi.entityService.findMany(
+        "api::client.client",
+        {
+          filters: {
             tenant: {
-              tenantId,
+              tenantId: {
+                $eq: tenantId,
+              },
             },
           },
+          sort: [{ publishedAt: "desc" }],
           offset: offset ?? 0,
           limit: limit ?? 20,
-        });
+        }
+      );
+
+      const appointments = await strapi.entityService.findMany(
+        "api::appointment.appointment",
+        {
+          filters: {
+            tenant: {
+              tenantId: {
+                $eq: tenantId,
+              },
+            },
+          },
+          sort: [{ appointmentDay: "desc" }],
+          offset: offset ?? 0,
+          limit: limit ?? 20,
+        }
+      );
 
       const tenant = {
         ...response,

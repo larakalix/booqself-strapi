@@ -26,17 +26,21 @@ module.exports = () => ({
   },
   getAppointmentsByFilter: async ({ tenantId, offset, limit }) => {
     try {
-      const result = await strapi.db
-        .query("api::appointment.appointment")
-        .findMany({
-          where: {
+      const result = await strapi.entityService.findMany(
+        "api::appointment.appointment",
+        {
+          filters: {
             tenant: {
-              tenantId,
+              tenantId: {
+                $eq: tenantId,
+              },
             },
           },
+          sort: [{ appointmentDay: "desc" }],
           offset: offset ?? 0,
           limit: limit ?? 20,
-        });
+        }
+      );
 
       return {
         data: result,

@@ -27,12 +27,15 @@ module.exports = () => ({
   },
   getClientsByFilter: async ({ tenantId, offset, limit }) => {
     try {
-      const result = await strapi.db.query("api::client.client").findMany({
-        where: {
+      const result = await strapi.entityService.findMany("api::client.client", {
+        filters: {
           tenant: {
-            tenantId,
+            tenantId: {
+              $eq: tenantId,
+            },
           },
         },
+        sort: [{ publishedAt: "desc" }],
         offset: offset ?? 0,
         limit: limit ?? 20,
       });
