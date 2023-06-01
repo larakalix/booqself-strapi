@@ -24,18 +24,20 @@ module.exports = () => ({
       return err;
     }
   },
-  getAppointmentsByFilter: async ({ tenantId, offset, limit }) => {
+  getAppointmentsByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
+      const filters = { tenant: { tenantId: { $eq: tenantId } } };
+      const updatedFilters = Object.fromEntries(
+        new Map([
+          ...Object.entries(filters),
+          ...Object.entries(query).map(([p, v]) => [p, { $containsi: v }]),
+        ])
+      );
+
       const result = await strapi.entityService.findMany(
         "api::appointment.appointment",
         {
-          filters: {
-            tenant: {
-              tenantId: {
-                $eq: tenantId,
-              },
-            },
-          },
+          filters: updatedFilters,
           sort: [{ appointmentDay: "desc" }],
           offset: offset ?? 0,
           limit: limit ?? 20,

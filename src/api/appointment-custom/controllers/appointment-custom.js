@@ -41,6 +41,7 @@ module.exports = {
   },
   appointmentsByFilter: async (ctx, next) => {
     try {
+      const query = ctx?.query ?? null;
       const tenantId = ctx.params["tenantId"];
       const offset = ctx.params["offset"];
       const limit = ctx.params["limit"];
@@ -49,9 +50,7 @@ module.exports = {
 
       const data = await strapi
         .service("api::appointment-custom.appointment-custom")
-        .getAppointmentsByFilter({ tenantId, offset, limit });
-
-      console.log({ ...data, error: null });
+        .getAppointmentsByFilter({ tenantId, offset, limit, query });
 
       ctx.body = { ...data, error: null };
     } catch (error) {
