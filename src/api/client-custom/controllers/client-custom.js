@@ -50,8 +50,6 @@ module.exports = {
         .service("api::client-custom.client-custom")
         .getClientsByFilter({ tenantId, offset, limit, query });
 
-      console.log({ ...data, error: null });
-
       ctx.body = { ...data, error: null };
     } catch (error) {
       ctx.body = {

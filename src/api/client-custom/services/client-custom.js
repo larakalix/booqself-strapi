@@ -27,6 +27,7 @@ module.exports = () => ({
   },
   getClientsByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
+      console.clear();
       const filters = { tenant: { tenantId: { $eq: tenantId } } };
       const updatedFilters = Object.fromEntries(
         new Map([

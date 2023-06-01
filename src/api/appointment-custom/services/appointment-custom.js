@@ -34,6 +34,20 @@ module.exports = () => ({
         ])
       );
 
+      if (query?.rangeDate) {
+        const [start, end] = query.rangeDate.split("|");
+        console.log({ start, end });
+        console.log([decodeURIComponent(start), decodeURIComponent(end)]);
+        updatedFilters.appointmentDay = {
+          $gte: decodeURIComponent(start),
+          $lte: decodeURIComponent(end),
+          // $between: [decodeURIComponent(start), decodeURIComponent(end)],
+        };
+        delete updatedFilters.rangeDate;
+      }
+
+      console.log("updatedFilters", updatedFilters);
+
       const result = await strapi.entityService.findMany(
         "api::appointment.appointment",
         {

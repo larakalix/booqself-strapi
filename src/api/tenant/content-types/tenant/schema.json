@@ -31,12 +31,16 @@
       "mappedBy": "tenant"
     },
     "logo": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": false
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
