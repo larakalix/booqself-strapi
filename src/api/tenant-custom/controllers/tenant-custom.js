@@ -41,7 +41,7 @@ module.exports = {
 
       const tenant = await strapi
         .service("api::tenant-custom.tenant-custom")
-        .tenantBoilerplate({ tenantId, offset: 0, limit: 20 });
+        .tenantBoilerplate({ tenantId, offset: 0, limit: 30 });
 
       ctx.body = { data: tenant, error: null };
     } catch (error) {

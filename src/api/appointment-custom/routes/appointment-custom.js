@@ -18,5 +18,14 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/appointment-custom/filter/:tenantId/:offset/:limit",
+      handler: "appointment-custom.appointmentsByFilter",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

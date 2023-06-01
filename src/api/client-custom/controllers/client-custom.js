@@ -16,16 +16,15 @@ module.exports = {
     try {
       const tenantId = ctx.params["tenantId"];
       const email = ctx.params["email"];
-
-      console.log("tenantId", tenantId);
-      console.log("email", email);
+      const offset = ctx.params["offset"];
+      const limit = ctx.params["limit"];
 
       if (!email) return ctx.badRequest("Email is required");
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
       const result = await strapi
         .service("api::client-custom.client-custom")
-        .appointmentsById({ tenantId, email, offset: 0, limit: 20 });
+        .getAppointmentsById({ tenantId, email, offset, limit });
 
       ctx.body = { data: result, error: null };
     } catch (error) {
@@ -38,20 +37,24 @@ module.exports = {
       };
     }
   },
-  boilerplate: async (ctx, next) => {
+  clientsByFilter: async (ctx, next) => {
     try {
       const tenantId = ctx.params["tenantId"];
+      const offset = ctx.params["offset"];
+      const limit = ctx.params["limit"];
 
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
-      const tenant = await strapi
-        .service("api::tenant-custom.tenant-custom")
-        .tenantBoilerplate({ tenantId, offset: 0, limit: 20 });
+      const data = await strapi
+        .service("api::client-custom.client-custom")
+        .getClientsByFilter({ tenantId, offset, limit });
 
-      ctx.body = { data: tenant, error: null };
+      console.log({ ...data, error: null });
+
+      ctx.body = { ...data, error: null };
     } catch (error) {
       ctx.body = {
-        data: null,
+        data: [],
         error: {
           message: error.message,
           status: error.status,

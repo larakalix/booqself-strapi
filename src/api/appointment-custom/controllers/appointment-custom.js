@@ -39,17 +39,21 @@ module.exports = {
       };
     }
   },
-  boilerplate: async (ctx, next) => {
+  appointmentsByFilter: async (ctx, next) => {
     try {
       const tenantId = ctx.params["tenantId"];
+      const offset = ctx.params["offset"];
+      const limit = ctx.params["limit"];
 
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
-      const tenant = await strapi
-        .service("api::tenant-custom.tenant-custom")
-        .tenantBoilerplate({ tenantId, offset: 0, limit: 20 });
+      const data = await strapi
+        .service("api::appointment-custom.appointment-custom")
+        .getAppointmentsByFilter({ tenantId, offset, limit });
 
-      ctx.body = { data: tenant, error: null };
+      console.log({ ...data, error: null });
+
+      ctx.body = { ...data, error: null };
     } catch (error) {
       ctx.body = {
         data: [],
