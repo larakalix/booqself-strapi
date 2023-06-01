@@ -25,7 +25,7 @@ module.exports = {
       ctx.body = { data: tenant, error: null };
     } catch (error) {
       ctx.body = {
-        data: null,
+        data: [],
         error: {
           message: error.message,
           status: error.status,
@@ -46,7 +46,7 @@ module.exports = {
       ctx.body = { data: tenant, error: null };
     } catch (error) {
       ctx.body = {
-        data: null,
+        data: [],
         error: {
           message: error.message,
           status: error.status,

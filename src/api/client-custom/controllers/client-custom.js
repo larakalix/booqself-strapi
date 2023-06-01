@@ -17,6 +17,9 @@ module.exports = {
       const tenantId = ctx.params["tenantId"];
       const email = ctx.params["email"];
 
+      console.log("tenantId", tenantId);
+      console.log("email", email);
+
       if (!email) return ctx.badRequest("Email is required");
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
@@ -27,7 +30,7 @@ module.exports = {
       ctx.body = { data: result, error: null };
     } catch (error) {
       ctx.body = {
-        data: null,
+        data: [],
         error: {
           message: error.message,
           status: error.status,
