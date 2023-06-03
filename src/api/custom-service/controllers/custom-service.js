@@ -42,8 +42,8 @@ module.exports = {
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
       const data = await strapi
-        .service("api::custom-employee.custom-employee")
-        .servicesByFilter({ tenantId, offset, limit, query });
+        .service("api::custom-service.custom-service")
+        .getServicesByFilter({ tenantId, offset, limit, query });
 
       ctx.body = { ...data, error: null };
     } catch (error) {

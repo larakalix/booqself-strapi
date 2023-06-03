@@ -5,7 +5,7 @@
  */
 
 module.exports = () => ({
-  appointmentsByTenantId: async ({ tenantId, email, offset, limit }) => {
+  appointmentsByTenantId: async ({ tenantId, offset, limit }) => {
     try {
       const result = await strapi.db
         .query("api::appointment.appointment")
@@ -28,6 +28,30 @@ module.exports = () => ({
       return err;
     }
   },
+  appointmentsForBooking: async ({ tenantId }) => {
+    try {
+      const result = await strapi.db
+        .query("api::appointment.appointment")
+        .findMany({
+          where: {
+            tenant: {
+              tenantId,
+            },
+            appointmentDay: {
+              $gte: new Date().toISOString().split("T")[0],
+            },
+          },
+          sort: [{ appointmentDay: "desc" }],
+        });
+
+      return result.map((item) => ({
+        id: item.id,
+        appointmentDay: item.appointmentDay,
+      }));
+    } catch (err) {
+      return err;
+    }
+  },
   getAppointmentsByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
       const filters = { tenant: { tenantId: { $eq: tenantId } } };
@@ -46,6 +70,14 @@ module.exports = () => ({
           // $between: [decodeURIComponent(start), decodeURIComponent(end)],
         };
         delete updatedFilters.rangeDate;
+      }
+
+      if (query?.employee) {
+        updatedFilters.employee = {
+          name: {
+            $containsi: query.employee,
+          },
+        };
       }
 
       const result = await strapi.entityService.findMany(
@@ -79,15 +111,6 @@ module.exports = () => ({
   },
   create: async ({ appointment }) => {
     try {
-      // {
-      //   "name": "Marion Cook",
-      //   "email": "marion_cook@example.com",
-      //   "appointmentDay": "2023-06-29T11:00:00.000Z",
-      //   "phone": "55622877738",
-      //   "employee": 2,
-      //   "service": 1,
-      //   "tenant": 1
-      // }
       const { employee, service, tenant, ...values } = appointment;
 
       const result = await strapi.entityService.create(

@@ -11,6 +11,15 @@ module.exports = {
     },
     {
       method: "GET",
+      path: "/custom-appointment/book/:tenantId",
+      handler: "custom-appointment.appointmentsForBooking",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: "GET",
       path: "/custom-appointment/filter/:tenantId/:offset/:limit",
       handler: "custom-appointment.appointmentsByFilter",
       config: {

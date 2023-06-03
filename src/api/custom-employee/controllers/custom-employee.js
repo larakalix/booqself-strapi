@@ -43,7 +43,7 @@ module.exports = {
 
       const data = await strapi
         .service("api::custom-employee.custom-employee")
-        .getAppointmentsByFilter({ tenantId, offset, limit, query });
+        .getEmployeesByFilter({ tenantId, offset, limit, query });
 
       ctx.body = { ...data, error: null };
     } catch (error) {

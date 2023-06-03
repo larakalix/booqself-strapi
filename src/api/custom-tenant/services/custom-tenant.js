@@ -19,10 +19,36 @@ module.exports = () => ({
         .service("api::custom-service.custom-service")
         .servicesByTenantId({ tenantId });
 
+      const appointments = await strapi
+        .service("api::custom-appointment.custom-appointment")
+        .appointmentsForBooking({ tenantId });
+
+      const timeOptions = [];
+      const start = new Date(`2000-01-01 ${response.openingTime}`);
+      const end = new Date(`2000-01-01 ${response.closingTime}`);
+      const intervalMilliseconds = response.minutesInterval * 60 * 1000;
+      let currentTime = start.getTime();
+
+      while (currentTime <= end.getTime()) {
+        const timeValue = new Date(currentTime).toLocaleTimeString([], {
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        });
+
+        timeOptions.push({
+          value: `time${timeOptions.length + 1}`,
+          label: timeValue,
+        });
+        currentTime += intervalMilliseconds;
+      }
+
       const tenant = {
         ...response,
         employees,
         services,
+        appointments,
+        timeOptions,
       };
 
       return tenant;
@@ -36,37 +62,21 @@ module.exports = () => ({
         where: { tenantId },
       });
 
-      const clients = await strapi.entityService.findMany(
-        "api::client.client",
-        {
-          filters: {
-            tenant: {
-              tenantId: {
-                $eq: tenantId,
-              },
-            },
-          },
-          sort: [{ publishedAt: "desc" }],
+      const clients = await strapi
+        .service("api::custom-client.custom-client")
+        .getAppointmentsByTenantId({
+          tenantId,
           offset: offset ?? 0,
           limit: limit ?? 20,
-        }
-      );
+        });
 
-      const appointments = await strapi.entityService.findMany(
-        "api::appointment.appointment",
-        {
-          filters: {
-            tenant: {
-              tenantId: {
-                $eq: tenantId,
-              },
-            },
-          },
-          sort: [{ appointmentDay: "desc" }],
+      const appointments = await strapi
+        .service("api::custom-appointment.custom-appointment")
+        .appointmentsByTenantId({
+          tenantId,
           offset: offset ?? 0,
           limit: limit ?? 20,
-        }
-      );
+        });
 
       const tenant = {
         ...response,

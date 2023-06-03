@@ -44,6 +44,19 @@
     },
     "cloverMerchantId": {
       "type": "uid"
+    },
+    "openingTime": {
+      "type": "time",
+      "required": false,
+      "default": "08:00"
+    },
+    "closingTime": {
+      "type": "time",
+      "default": "18:00"
+    },
+    "minutesInterval": {
+      "type": "integer",
+      "default": 60
     }
   }
 }

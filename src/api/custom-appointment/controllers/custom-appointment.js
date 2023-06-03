@@ -32,6 +32,29 @@ module.exports = {
       };
     }
   },
+  appointmentsForBooking: async (ctx, next) => {
+    try {
+      const tenantId = ctx.params["tenantId"];
+
+      if (!tenantId) return ctx.badRequest("Tenant Id is required");
+
+      const result = await strapi
+        .service("api::custom-appointment.custom-appointment")
+        .appointmentsForBooking({
+          tenantId,
+        });
+
+      ctx.body = { data: result, error: null };
+    } catch (error) {
+      ctx.body = {
+        data: [],
+        error: {
+          message: error.message,
+          status: error.status,
+        },
+      };
+    }
+  },
   appointmentsByFilter: async (ctx, next) => {
     try {
       const query = ctx?.query ?? null;

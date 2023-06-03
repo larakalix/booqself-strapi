@@ -22,7 +22,7 @@ module.exports = () => ({
       return err;
     }
   },
-  servicesByFilter: async ({ tenantId, offset, limit, query }) => {
+  getServicesByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
       const filters = { tenant: { tenantId: { $eq: tenantId } } };
       const updatedFilters = Object.fromEntries(
@@ -36,7 +36,7 @@ module.exports = () => ({
         "api::service.service",
         {
           filters: updatedFilters,
-          sort: [{ appointmentDay: "desc" }],
+          sort: [{ id: "desc" }],
           offset: offset ?? 0,
           limit: limit ?? 20,
         }

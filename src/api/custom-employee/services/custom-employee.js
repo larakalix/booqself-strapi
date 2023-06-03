@@ -22,7 +22,7 @@ module.exports = () => ({
       return err;
     }
   },
-  employeesByFilter: async ({ tenantId, offset, limit, query }) => {
+  getEmployeesByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
       const filters = { tenant: { tenantId: { $eq: tenantId } } };
       const updatedFilters = Object.fromEntries(
@@ -32,21 +32,11 @@ module.exports = () => ({
         ])
       );
 
-      if (query?.rangeDate) {
-        const [start, end] = query.rangeDate.split("|");
-        updatedFilters.appointmentDay = {
-          $gte: decodeURIComponent(start),
-          $lte: decodeURIComponent(end),
-          // $between: [decodeURIComponent(start), decodeURIComponent(end)],
-        };
-        delete updatedFilters.rangeDate;
-      }
-
       const result = await strapi.entityService.findMany(
         "api::employee.employee",
         {
           filters: updatedFilters,
-          sort: [{ appointmentDay: "desc" }],
+          sort: [{ id: "desc" }],
           offset: offset ?? 0,
           limit: limit ?? 20,
         }
