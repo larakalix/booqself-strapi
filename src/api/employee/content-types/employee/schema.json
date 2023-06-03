@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employees",
+  "info": {
+    "singularName": "employee",
+    "pluralName": "employees",
+    "displayName": "Employee",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "nickname": {
+      "type": "string",
+      "required": false
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "pin": {
+      "type": "string",
+      "required": true
+    },
+    "tenant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tenant.tenant"
+    },
+    "employee_role": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employee-role.employee-role"
+    }
+  }
+}

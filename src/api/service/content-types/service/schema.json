@@ -4,7 +4,8 @@
   "info": {
     "singularName": "service",
     "pluralName": "services",
-    "displayName": "Service"
+    "displayName": "Service",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -26,6 +27,15 @@
     "isActive": {
       "type": "boolean",
       "default": true
+    },
+    "tenant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tenant.tenant"
+    },
+    "duration": {
+      "type": "string",
+      "regex": "^(?:\\d{2}:\\d{2}\\s(?:hrs?|min))$"
     }
   }
 }

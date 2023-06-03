@@ -35,6 +35,16 @@
     "phone": {
       "type": "string",
       "required": false
+    },
+    "employee": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::employee.employee"
+    },
+    "service": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service.service"
     }
   }
 }
