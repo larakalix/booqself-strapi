@@ -42,8 +42,6 @@ module.exports = () => ({
         };
       }
 
-      console.log(filter);
-
       const result = await strapi.db
         .query("api::appointment.appointment")
         .findMany({
