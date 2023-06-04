@@ -36,6 +36,16 @@
     "duration": {
       "type": "string",
       "regex": "^(?:\\d{2}:\\d{2}\\s(?:hrs?|min))$"
+    },
+    "thumbnail": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

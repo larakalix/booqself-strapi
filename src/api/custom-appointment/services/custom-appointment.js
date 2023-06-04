@@ -28,8 +28,22 @@ module.exports = () => ({
       return err;
     }
   },
-  appointmentsForBooking: async ({ tenantId }) => {
+  appointmentsForBooking: async ({ tenantId, month, year }) => {
     try {
+      let filter = {
+        $gte: new Date().toISOString().split("T")[0],
+      };
+
+      if (month && year) {
+        const _month = parseInt(month, 10) + 1;
+        filter = {
+          $gte: new Date(`${year}-${_month}-01`).toISOString().split("T")[0],
+          $lte: new Date(`${year}-${_month}-31`).toISOString().split("T")[0],
+        };
+      }
+
+      console.log(filter);
+
       const result = await strapi.db
         .query("api::appointment.appointment")
         .findMany({
@@ -37,17 +51,18 @@ module.exports = () => ({
             tenant: {
               tenantId,
             },
-            appointmentDay: {
-              $gte: new Date().toISOString().split("T")[0],
-            },
+            appointmentDay: filter,
           },
-          sort: [{ appointmentDay: "desc" }],
         });
 
-      return result.map((item) => ({
-        id: item.id,
-        appointmentDay: item.appointmentDay,
-      }));
+      return result
+        .map((item) => ({
+          id: item.id,
+          appointmentDay: item.appointmentDay,
+        }))
+        .sort(
+          (a, b) => new Date(a.appointmentDay) - new Date(b.appointmentDay)
+        );
     } catch (err) {
       return err;
     }
@@ -63,11 +78,13 @@ module.exports = () => ({
       );
 
       if (query?.rangeDate) {
-        const [start, end] = query.rangeDate.split("|");
+        const [from, to] = query.rangeDate.split("|");
         updatedFilters.appointmentDay = {
-          $gte: decodeURIComponent(start),
-          $lte: decodeURIComponent(end),
+          // $gte: decodeURIComponent(start),
+          // $lte: decodeURIComponent(end),
           // $between: [decodeURIComponent(start), decodeURIComponent(end)],
+          $gte: new Date(from).toISOString().split("T")[0],
+          $lte: new Date(to).toISOString().split("T")[0],
         };
         delete updatedFilters.rangeDate;
       }
@@ -124,8 +141,6 @@ module.exports = () => ({
           },
         }
       );
-
-      console.log("__DATA", result);
 
       return result;
     } catch (err) {

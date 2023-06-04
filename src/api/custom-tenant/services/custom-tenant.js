@@ -19,10 +19,6 @@ module.exports = () => ({
         .service("api::custom-service.custom-service")
         .servicesByTenantId({ tenantId });
 
-      const appointments = await strapi
-        .service("api::custom-appointment.custom-appointment")
-        .appointmentsForBooking({ tenantId });
-
       const timeOptions = [];
       const start = new Date(`2000-01-01 ${response.openingTime}`);
       const end = new Date(`2000-01-01 ${response.closingTime}`);
@@ -47,7 +43,6 @@ module.exports = () => ({
         ...response,
         employees,
         services,
-        appointments,
         timeOptions,
       };
 

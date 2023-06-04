@@ -37,6 +37,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::employee-role.employee-role"
+    },
+    "thumbnail": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

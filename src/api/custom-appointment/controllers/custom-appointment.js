@@ -35,6 +35,7 @@ module.exports = {
   appointmentsForBooking: async (ctx, next) => {
     try {
       const tenantId = ctx.params["tenantId"];
+      const query = ctx?.query ?? null;
 
       if (!tenantId) return ctx.badRequest("Tenant Id is required");
 
@@ -42,6 +43,8 @@ module.exports = {
         .service("api::custom-appointment.custom-appointment")
         .appointmentsForBooking({
           tenantId,
+          month: query?.month ?? null,
+          year: query?.year ?? null,
         });
 
       ctx.body = { data: result, error: null };
