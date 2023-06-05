@@ -67,7 +67,7 @@ module.exports = {
         .service("api::custom-tenant.custom-tenant")
         .update({ tenantId, tenant });
 
-      ctx.body = { ...data, error: null };
+      ctx.body = { data: { ...data }, error: null };
     } catch (error) {
       ctx.body = {
         data: [],

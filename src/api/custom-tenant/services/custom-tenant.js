@@ -111,15 +111,23 @@ module.exports = () => ({
   },
   update: async ({ tenantId, tenant }) => {
     try {
+      console.log("------------------------------------");
+      console.log("------------------------------------");
+      console.log(tenantId, tenant);
+      console.log("------------------------------------");
+      console.log("------------------------------------");
       const result = await strapi.entityService.update(
         "api::tenant.tenant",
-        parseInt(tenantId, 10),
+        tenantId,
         {
           data: {
             ...tenant,
           },
         }
       );
+      console.log("__RESULT", result);
+      console.log("------------------------------------");
+      console.log("------------------------------------");
 
       return result;
     } catch (err) {
