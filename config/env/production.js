@@ -8,6 +8,7 @@ module.exports = ({ env }) => ({
       user: env("PGUSER", "strapi"),
       password: env("PGPASSWORD", "password"),
       ssl: env.bool(true),
+      timezone: "GMT-4",
     },
     pool: { min: 0 },
   },
