@@ -57,6 +57,11 @@
     "minutesInterval": {
       "type": "integer",
       "default": 60
+    },
+    "timeZone": {
+      "type": "string",
+      "default": "America/New_York",
+      "required": true
     }
   }
 }
