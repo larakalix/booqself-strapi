@@ -27,5 +27,14 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "PUT",
+      path: "/custom-tenant/update/:tenantId",
+      handler: "custom-tenant.update",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

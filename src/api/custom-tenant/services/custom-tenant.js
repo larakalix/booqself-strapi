@@ -5,38 +5,43 @@
  */
 
 module.exports = () => ({
-  tenantById: async ({ tenantId }) => {
+  tenantById: async ({ tenantId, justTenant }) => {
     try {
       const response = await strapi.db.query("api::tenant.tenant").findOne({
         where: { tenantId },
       });
 
-      const employees = await strapi
-        .service("api::custom-employee.custom-employee")
-        .employeesByTenantId({ tenantId });
+      let employees = [];
+      let services = [];
+      let timeOptions = [];
 
-      const services = await strapi
-        .service("api::custom-service.custom-service")
-        .servicesByTenantId({ tenantId });
+      if (!justTenant || justTenant === "false") {
+        employees = await strapi
+          .service("api::custom-employee.custom-employee")
+          .employeesByTenantId({ tenantId });
 
-      const timeOptions = [];
-      const start = new Date(`2000-01-01 ${response.openingTime}`);
-      const end = new Date(`2000-01-01 ${response.closingTime}`);
-      const intervalMilliseconds = response.minutesInterval * 60 * 1000;
-      let currentTime = start.getTime();
+        services = await strapi
+          .service("api::custom-service.custom-service")
+          .servicesByTenantId({ tenantId });
 
-      while (currentTime <= end.getTime()) {
-        const timeValue = new Date(currentTime).toLocaleTimeString([], {
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        });
+        const start = new Date(`2000-01-01 ${response.openingTime}`);
+        const end = new Date(`2000-01-01 ${response.closingTime}`);
+        const intervalMilliseconds = response.minutesInterval * 60 * 1000;
+        let currentTime = start.getTime();
 
-        timeOptions.push({
-          value: `time${timeOptions.length + 1}`,
-          label: timeValue,
-        });
-        currentTime += intervalMilliseconds;
+        while (currentTime <= end.getTime()) {
+          const timeValue = new Date(currentTime).toLocaleTimeString([], {
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          });
+
+          timeOptions.push({
+            value: `time${timeOptions.length + 1}`,
+            label: timeValue,
+          });
+          currentTime += intervalMilliseconds;
+        }
       }
 
       const tenant = {
@@ -100,6 +105,23 @@ module.exports = () => ({
       };
 
       return tenant;
+    } catch (err) {
+      return err;
+    }
+  },
+  update: async ({ tenantId, tenant }) => {
+    try {
+      const result = await strapi.entityService.update(
+        "api::tenant.tenant",
+        parseInt(tenantId, 10),
+        {
+          data: {
+            ...tenant,
+          },
+        }
+      );
+
+      return result;
     } catch (err) {
       return err;
     }
