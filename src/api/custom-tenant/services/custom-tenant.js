@@ -8,7 +8,16 @@ module.exports = () => ({
   tenantById: async ({ tenantId, justTenant }) => {
     try {
       const response = await strapi.db.query("api::tenant.tenant").findOne({
-        where: { tenantId },
+        where: {
+          $or: [
+            {
+              tenantId,
+            },
+            {
+              cloverMerchantId: tenantId,
+            },
+          ],
+        },
       });
 
       let employees = [];
@@ -111,11 +120,6 @@ module.exports = () => ({
   },
   update: async ({ tenantId, tenant }) => {
     try {
-      console.log("------------------------------------");
-      console.log("------------------------------------");
-      console.log(tenantId, tenant);
-      console.log("------------------------------------");
-      console.log("------------------------------------");
       const result = await strapi.entityService.update(
         "api::tenant.tenant",
         tenantId,
@@ -125,9 +129,6 @@ module.exports = () => ({
           },
         }
       );
-      console.log("__RESULT", result);
-      console.log("------------------------------------");
-      console.log("------------------------------------");
 
       return result;
     } catch (err) {
