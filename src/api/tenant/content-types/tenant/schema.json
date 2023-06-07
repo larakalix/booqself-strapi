@@ -24,12 +24,6 @@
       "type": "uid",
       "targetField": "name"
     },
-    "form": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::form.form",
-      "mappedBy": "tenant"
-    },
     "logo": {
       "type": "media",
       "multiple": false,
@@ -62,6 +56,9 @@
       "type": "string",
       "default": "America/New_York",
       "required": true
+    },
+    "cloverApiKey": {
+      "type": "uid"
     }
   }
 }

@@ -15,12 +15,6 @@
     "name": {
       "type": "string"
     },
-    "tenant": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::tenant.tenant",
-      "inversedBy": "form"
-    },
     "formFields": {
       "type": "relation",
       "relation": "oneToMany",

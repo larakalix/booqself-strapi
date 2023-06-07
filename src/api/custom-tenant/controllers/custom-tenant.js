@@ -34,27 +34,6 @@ module.exports = {
       };
     }
   },
-  boilerplate: async (ctx, next) => {
-    try {
-      const tenantId = ctx.params["tenantId"];
-
-      if (!tenantId) return ctx.badRequest("Tenant Id is required");
-
-      const tenant = await strapi
-        .service("api::custom-tenant.custom-tenant")
-        .tenantBoilerplate({ tenantId, offset: 0, limit: 30 });
-
-      ctx.body = { data: tenant, error: null };
-    } catch (error) {
-      ctx.body = {
-        data: [],
-        error: {
-          message: error.message,
-          status: error.status,
-        },
-      };
-    }
-  },
   update: async (ctx, next) => {
     try {
       const tenantId = ctx.params["tenantId"];

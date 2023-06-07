@@ -65,59 +65,6 @@ module.exports = () => ({
       return err;
     }
   },
-  tenantBoilerplate: async ({ tenantId, offset, limit }) => {
-    try {
-      const response = await strapi.db.query("api::tenant.tenant").findOne({
-        where: { tenantId },
-      });
-
-      const clients = await strapi
-        .service("api::custom-client.custom-client")
-        .getAppointmentsByTenantId({
-          tenantId,
-          offset: offset ?? 0,
-          limit: limit ?? 20,
-        });
-
-      const appointments = await strapi
-        .service("api::custom-appointment.custom-appointment")
-        .appointmentsByTenantId({
-          tenantId,
-          offset: offset ?? 0,
-          limit: limit ?? 20,
-        });
-
-      const tenant = {
-        ...response,
-        clients: {
-          data: [...clients],
-          meta: {
-            pagination: {
-              page: 1,
-              pageSize: limit,
-              pageCount: 1,
-              total: clients.length,
-            },
-          },
-        },
-        appointments: {
-          data: [...appointments],
-          meta: {
-            pagination: {
-              page: 1,
-              pageSize: limit,
-              pageCount: 1,
-              total: clients.length,
-            },
-          },
-        },
-      };
-
-      return tenant;
-    } catch (err) {
-      return err;
-    }
-  },
   update: async ({ tenantId, tenant }) => {
     try {
       const result = await strapi.entityService.update(
