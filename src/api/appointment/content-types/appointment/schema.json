@@ -37,14 +37,22 @@
       "required": false
     },
     "employee": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::employee.employee"
+      "displayName": "employee",
+      "type": "component",
+      "repeatable": false,
+      "component": "employee.employee"
     },
     "service": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::service.service"
+      "displayName": "service",
+      "type": "component",
+      "repeatable": false,
+      "component": "service.service"
+    },
+    "cloverEmployeeId": {
+      "type": "string"
+    },
+    "cloverServiceId": {
+      "type": "string"
     }
   }
 }

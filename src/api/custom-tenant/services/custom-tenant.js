@@ -22,35 +22,43 @@ module.exports = () => ({
 
       let employees = [];
       let services = [];
-      let timeOptions = [];
+
+      const { openingTime, closingTime, minutesInterval } = response;
+      const intervalMilliseconds = minutesInterval * 60 * 1000;
+
+      const timeOptions = Array.from(
+        {
+          length:
+            Math.floor(
+              (new Date(`2000-01-01 ${closingTime}`).getTime() -
+                new Date(`2000-01-01 ${openingTime}`).getTime()) /
+                intervalMilliseconds
+            ) + 1,
+        },
+        (_, index) => {
+          const currentTime = new Date(
+            new Date(`2000-01-01 ${openingTime}`).getTime() +
+              index * intervalMilliseconds
+          );
+          return {
+            value: `time${index + 1}`,
+            label: currentTime.toLocaleTimeString([], {
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true,
+            }),
+          };
+        }
+      );
 
       if (!justTenant || justTenant === "false") {
         employees = await strapi
           .service("api::custom-employee.custom-employee")
-          .employeesByTenantId({ tenantId });
+          .employeesByTenantId({ tenantId: response.tenantId });
 
         services = await strapi
           .service("api::custom-service.custom-service")
-          .servicesByTenantId({ tenantId });
-
-        const start = new Date(`2000-01-01 ${response.openingTime}`);
-        const end = new Date(`2000-01-01 ${response.closingTime}`);
-        const intervalMilliseconds = response.minutesInterval * 60 * 1000;
-        let currentTime = start.getTime();
-
-        while (currentTime <= end.getTime()) {
-          const timeValue = new Date(currentTime).toLocaleTimeString([], {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          });
-
-          timeOptions.push({
-            value: `time${timeOptions.length + 1}`,
-            label: timeValue,
-          });
-          currentTime += intervalMilliseconds;
-        }
+          .servicesByTenantId({ tenantId: response.tenantId });
       }
 
       const tenant = {

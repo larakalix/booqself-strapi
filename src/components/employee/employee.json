@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_employee_employees",
+  "info": {
+    "displayName": "employee",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cloverId": {
+      "type": "string"
+    },
+    "pin": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    }
+  }
+}
