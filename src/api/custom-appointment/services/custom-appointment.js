@@ -126,10 +126,6 @@ module.exports = () => ({
   },
   create: async ({ appointment }) => {
     try {
-      // const { employee, service, tenant, ...values } = appointment;
-
-      console.log("__APPOINTMENT", appointment);
-
       const result = await strapi.entityService.create(
         "api::appointment.appointment",
         {
@@ -139,7 +135,22 @@ module.exports = () => ({
         }
       );
 
-      console.log("__RESULT", result);
+      return result;
+    } catch (err) {
+      return err;
+    }
+  },
+  update: async ({ appointmentId, appointment }) => {
+    try {
+      const result = await strapi.entityService.update(
+        "api::appointment.appointment",
+        appointmentId,
+        {
+          data: {
+            ...appointment,
+          },
+        }
+      );
 
       return result;
     } catch (err) {

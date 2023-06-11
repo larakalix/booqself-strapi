@@ -92,7 +92,30 @@ module.exports = {
         .service("api::custom-appointment.custom-appointment")
         .create({ appointment });
 
-      ctx.body = { ...data, error: null };
+      ctx.body = { data: { ...data }, error: null };
+    } catch (error) {
+      ctx.body = {
+        data: [],
+        error: {
+          message: error.message,
+          status: error.status,
+        },
+      };
+    }
+  },
+  update: async (ctx, next) => {
+    try {
+      const appointmentId = ctx.params["appointmentId"];
+      const appointment = ctx?.request?.body ?? null;
+
+      if (!appointmentId) return ctx.badRequest("Tenant Id is required");
+      if (!appointment) return ctx.badRequest("Data is required");
+
+      const data = await strapi
+        .service("api::custom-appointment.custom-appointment")
+        .update({ appointmentId, appointment });
+
+      ctx.body = { data: { ...data }, error: null };
     } catch (error) {
       ctx.body = {
         data: [],

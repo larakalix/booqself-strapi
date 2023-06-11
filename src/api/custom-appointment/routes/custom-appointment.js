@@ -36,5 +36,14 @@ module.exports = {
         middlewares: [],
       },
     },
+    {
+      method: "PUT",
+      path: "/custom-appointment/update/:appointmentId",
+      handler: "custom-appointment.update",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };
