@@ -1,7 +1,8 @@
 {
   "collectionName": "components_service_services",
   "info": {
-    "displayName": "service"
+    "displayName": "service",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -13,6 +14,10 @@
     },
     "price": {
       "type": "string"
+    },
+    "redeemed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
