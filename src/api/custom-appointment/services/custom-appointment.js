@@ -67,7 +67,7 @@ module.exports = () => ({
   },
   getAppointmentsByFilter: async ({ tenantId, offset, limit, query }) => {
     try {
-      const filters = { tenant: { tenantId: { $eq: tenantId } } };
+      const filters = { tenant: { cloverMerchantId: { $eq: tenantId } } };
       const updatedFilters = Object.fromEntries(
         new Map([
           ...Object.entries(filters),
