@@ -57,8 +57,9 @@ module.exports = () => ({
       );
 
       return result;
-    } catch (err) {
-      return err;
+    } catch (error) {
+      console.log("___ERROR_SERVICE", error);
+      return { error };
     }
   },
   update: async ({ membershipId, membership }) => {

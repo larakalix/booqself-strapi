@@ -59,6 +59,22 @@
     },
     "cloverApiKey": {
       "type": "uid"
+    },
+    "allowCloverSync": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "avoidUserCloverData": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "allowNotifications": {
+      "type": "boolean"
     }
   }
 }

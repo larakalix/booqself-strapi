@@ -41,13 +41,8 @@ module.exports = {
 
       ctx.body = { data: { ...data }, error: null };
     } catch (error) {
-      ctx.body = {
-        data: [],
-        error: {
-          message: error.message,
-          status: error.status,
-        },
-      };
+      console.log("___ERROR_CONTROLLER", error);
+      ctx.body = { error };
     }
   },
   update: async (ctx, next) => {
